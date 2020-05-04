@@ -1,6 +1,6 @@
 import { hello } from './sub';
 
-const message = 'Hello World';
+const message: string = 'Hello World';
 
 hello(message);
 

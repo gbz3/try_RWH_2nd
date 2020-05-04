@@ -1,21 +1,17 @@
 module.exports = {
   mode: "development",
-  entry: "./src/index.js",
+  entry: "./src/main.ts",
   module: {
     rules: [
       {
-        test: /\.js$/,
-	use: [
-          {
-	    loader: 'babel-loader',
-	    options: {
-	      presets: [
-	        '@babel/preset-env',
-	      ]
-	    }
-	  }
-	]
+        test: /\.ts$/,
+	use: 'ts-loader',
       }
+    ]
+  },
+  resolve: {
+    extensions: [
+      '.ts', '.js',
     ]
   }
 };

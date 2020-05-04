@@ -15,8 +15,6 @@ Downloading node-v14.1.0-linux-x64.tar.gz...
 -> https://nodejs.org/dist/v14.1.0/node-v14.1.0-linux-x64.tar.gz
 Installing node-v14.1.0-linux-x64...
 ...
-+ typescript@3.8.3  # nodenv-default-packages で自動追加
-...
 $ nodenv local 14.1.0
 $ node -v
 v14.1.0
@@ -29,25 +27,39 @@ $ npm -v
 - [最新版で学ぶwebpack 4入門
 JavaScriptのモジュールバンドラ](https://ics.media/entry/12140/)
 - [最新版で学ぶwebpack 4入門 - Babel 7でES2020環境の構築(React, Vue, Three.js, jQueryのサンプル付き)](https://ics.media/entry/16028/)
+- [最新版TypeScript+webpack 4の環境構築まとめ(React, Vue.js, Three.jsのサンプル付き)](https://ics.media/entry/16329/)
 
 ### npmモジュールインストール
 
 ```bash
 $ npm init
-$ npm install --save-dev webpack webpack-cli babel-loader @babel/core @babel/preset-env
+$ npm install --save-dev webpack webpack-cli typescript ts-loader
 $ cat package.json
 ...
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack"
+    "build": "webpack",
+    "watch": "webpack -w"
   },
 ...
   "devDependencies": {
-    "@babel/core": "^7.9.6",
-    "@babel/preset-env": "^7.9.6",
-    "babel-loader": "^8.1.0",
+    "ts-loader": "^7.0.2",
+    "typescript": "^3.8.3",
     "webpack": "^4.43.0",
     "webpack-cli": "^3.3.11"
+  },
+  "private": true
+}
+```
+
+### tsconfig.json
+
+```json
+{
+  "compilerOptions": {
+    "sourceMap": true,
+    "target": "es5",
+    "module": "es2015"
   }
 }
 ```
@@ -59,22 +71,18 @@ $ vi webpack.config.js
 $ cat webpack.config.js
 module.exports = {
   mode: "development",
-  entry: "./src/index.js",
+  entry: "./src/main.ts",
   module: {
     rules: [
       {
-        test: /\.js$/,
-        use: [
-          {
-            loader: 'babel-loader',
-            options: {
-              presets: [
-                '@babel/preset-env',
-              ]
-            }
-          }
-        ]
+        test: /\.ts$/,
+        use: 'ts-loader',
       }
+    ]
+  },
+  resolve: {
+    extensions: [
+      '.ts', '.js',
     ]
   }
 };
@@ -85,13 +93,13 @@ module.exports = {
 ```bash
 $ npm run build
 ...
-Hash: b2ac1705fd0e89fdf70c
+Hash: ae298551ba1dce06f43c
 Version: webpack 4.43.0
-Time: 577ms
-Built at: 05/04/2020 3:53:15 PM
-  Asset      Size  Chunks             Chunk Names
-main.js  4.67 KiB    main  [emitted]  main
+Time: 710ms
+Built at: 05/04/2020 4:45:54 PM
+  Asset     Size  Chunks             Chunk Names
+main.js  4.7 KiB    main  [emitted]  main
 Entrypoint main = main.js
-[./src/index.js] 75 bytes {main} [built]
-[./src/sub.js] 176 bytes {main} [built]
+[./src/main.ts] 76 bytes {main} [built]
+[./src/sub.ts] 206 bytes {main} [built]
 ```
