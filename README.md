@@ -24,11 +24,13 @@ $ npm -v
 6.14.4
 ```
 
-## npmモジュールインストール
+## 環境構築
 
 - [最新版で学ぶwebpack 4入門
 JavaScriptのモジュールバンドラ](https://ics.media/entry/12140/)
 - [最新版で学ぶwebpack 4入門 - Babel 7でES2020環境の構築(React, Vue, Three.js, jQueryのサンプル付き)](https://ics.media/entry/16028/)
+
+### npmモジュールインストール
 
 ```bash
 $ npm init
@@ -50,7 +52,7 @@ $ cat package.json
 }
 ```
 
-## webpack設定ファイル
+### webpack設定ファイル
 
 ```bash
 $ vi webpack.config.js
@@ -78,7 +80,7 @@ module.exports = {
 };
 ```
 
-## ビルド
+### ビルド
 
 ```bash
 $ npm run build
